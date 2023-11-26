@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.14" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+    <ProjectReference Include="..\InglesApp.Application\InglesApp.Application.csproj" />
+    <ProjectReference Include="..\InglesApp.Data\InglesApp.Data.csproj" />
+    <ProjectReference Include="..\InglesApp.Domain\InglesApp.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

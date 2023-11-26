@@ -1,0 +1,10 @@
+﻿namespace InglesApp.Application.Dto
+{
+    public class VocabularioDto
+    {
+        public string TipoVocabulario { get; set; }
+        public string EmIngles { get; set; }
+        public string Traducao { get; set; }
+        public string Explicacao { get; set; }
+    }
+}

@@ -1,0 +1,15 @@
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Application\bin\Debug\net8.0\InglesApp.Application.deps.json
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Application\bin\Debug\net8.0\InglesApp.Application.dll
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Application\bin\Debug\net8.0\InglesApp.Application.pdb
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Application\bin\Debug\net8.0\InglesApp.Domain.dll
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Application\bin\Debug\net8.0\InglesApp.Domain.pdb
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Application\obj\Debug\net8.0\InglesApp.Application.csproj.AssemblyReference.cache
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Application\obj\Debug\net8.0\InglesApp.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Application\obj\Debug\net8.0\InglesApp.Application.AssemblyInfoInputs.cache
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Application\obj\Debug\net8.0\InglesApp.Application.AssemblyInfo.cs
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Application\obj\Debug\net8.0\InglesApp.Application.csproj.CoreCompileInputs.cache
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Application\obj\Debug\net8.0\InglesApp.Application.csproj.CopyComplete
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Application\obj\Debug\net8.0\InglesApp.Application.dll
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Application\obj\Debug\net8.0\refint\InglesApp.Application.dll
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Application\obj\Debug\net8.0\InglesApp.Application.pdb
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Application\obj\Debug\net8.0\ref\InglesApp.Application.dll
