@@ -29,25 +29,25 @@ namespace InglesApp.API.Controllers
                 return Ok("Usuário padrão já cadastrado");
             }
 
-            var user = new User()
+            var userDto = new UserDto()
             {
-                Email = "danielsanches6301@gmail.com",
-                UserName = "daniel",
+                Nome = "Daniel",
+                Usuario = "daniel",
             };
 
-            user = _accountService.CriarContaAsync(user, senha).Result;
+            var user = _accountService.CriarContaAsync(userDto, senha).Result;
 
             return Ok("Usuário padrão criado com sucesso");
 
 
         }
 
-        [HttpPost]
+        [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginDto login)
         {
             try
             {
-                var user = await _accountService.ObterUsuarioAsync(login.Login);
+                var user = _accountService.ObterUsuarioAsync(login.Login);
 
                 if (user == null) return Unauthorized("Usuário ou senha incorretos");
 
@@ -55,10 +55,37 @@ namespace InglesApp.API.Controllers
 
                 if (!result.Succeeded) return Unauthorized("Usuário ou senha incorretos");
 
-                return Ok(new
+                return Ok(new UserDto
                 {
+                    Nome = user.Nome,
+                    Usuario = user.UserName,
                     Token = await _tokenService.GerarTokenAsync(user.UserName),
-                    UserName = user.UserName,
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("CreateAccount")]
+        public async Task<IActionResult> CreateAccount(UserDto model)
+        {
+            try
+            {
+                var user = _accountService.ObterUsuarioAsync(model.Usuario);
+
+                if (user != null) return BadRequest("Usuário já cadastrado");
+
+                user = await _accountService.CriarContaAsync(model, model.Senha);
+
+                if(user == null) return BadRequest("Erro ao criar usuário");
+
+                return Ok(new UserDto
+                {
+                    Nome = user.Nome,
+                    Usuario = user.UserName,
+                    Token = await _tokenService.GerarTokenAsync(user.UserName),
                 });
             }
             catch (Exception ex)

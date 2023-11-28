@@ -13,12 +13,14 @@ namespace InglesApp.Data.Transaction
 
         public bool Commit()
         {
-            return _context.SaveChanges() > 0;
+            var result = _context.SaveChanges();
+            return result > 0;
         }
 
         public async Task<bool> CommitAsync()
         {
-            return await _context.SaveChangesAsync() > 0;
+            var result = await _context.SaveChangesAsync();
+            return result > 0;
         }
     }
 }

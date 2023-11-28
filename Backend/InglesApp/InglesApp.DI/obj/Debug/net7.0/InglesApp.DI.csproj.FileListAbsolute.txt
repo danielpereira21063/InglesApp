@@ -19,3 +19,4 @@ D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.DI\obj\Debug\
 D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.DI\obj\Debug\net7.0\InglesApp.DI.pdb
 D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.DI\obj\Debug\net7.0\InglesApp.DI.genruntimeconfig.cache
 D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.DI\obj\Debug\net7.0\ref\InglesApp.DI.dll
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.DI\obj\Debug\net7.0\InglesApp.DI.sourcelink.json

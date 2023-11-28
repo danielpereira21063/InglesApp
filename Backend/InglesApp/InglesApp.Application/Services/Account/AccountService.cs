@@ -1,4 +1,5 @@
-﻿using InglesApp.Application.Services.Interfaces;
+﻿using InglesApp.Application.Dto;
+using InglesApp.Application.Services.Interfaces;
 using InglesApp.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 
@@ -27,20 +28,22 @@ namespace InglesApp.Application.Services.Account
             return _userManager.Users.ToList();
         }
 
-        public async Task<User> CriarContaAsync(User userDto, string senha)
+        public async Task<User> CriarContaAsync(UserDto userDto, string senha)
         {
             try
             {
-                var user = userDto;
-
-                var result = await _userManager.CreateAsync(user, senha);
+                var result = await _userManager.CreateAsync(new User()
+                {
+                    Nome = userDto.Nome,
+                    UserName = userDto.Usuario
+                }, senha);
 
                 if (!result.Succeeded)
                 {
                     return null;
                 }
 
-                return user;
+                return ObterUsuarioAsync(userDto.Usuario);
             }
             catch (Exception)
             {
@@ -49,9 +52,10 @@ namespace InglesApp.Application.Services.Account
 
         }
 
-        public async Task<User> ObterUsuarioAsync(string nomeUsuario)
+        public User ObterUsuarioAsync(string nomeUsuario)
         {
-            return await _userManager.FindByNameAsync(nomeUsuario);
+            var user =_userManager.Users.FirstOrDefault(x => x.UserName.ToLower() == nomeUsuario.ToLower());
+            return user;
         }
 
         public async Task<bool> UsuarioExite(string nomeUsuario)

@@ -33,7 +33,7 @@ namespace InglesApp.Data.Repositories
         public ICollection<Vocabulario> ObterPesquisa(string busca, int userId)
         {
             return _context.Vocabularios
-                .Where(v => (v.EmIngles.StartsWith(busca) || v.Traducao.Contains(busca) )&& v.UserId == userId)
+                .Where(v => (v.EmIngles.StartsWith(busca ?? "") || v.Traducao.Contains(busca ?? "") )&& v.UserId == userId)
                 .ToList();
         }
     }

@@ -33,6 +33,7 @@ namespace InglesApp.Application.Services
             return _vocabularioRepository.ObterPesquisa(pesquisa, userId)
                 .Select(voc => new VocabularioDto()
                 {
+                    Id = voc.Id,
                     EmIngles = voc.EmIngles,
                     Explicacao = voc.Explicacao,
                     TipoVocabulario = voc.TipoVocabulario.ToString(),
@@ -43,12 +44,17 @@ namespace InglesApp.Application.Services
 
         public VocabularioDto Salvar(VocabularioDto dto, int userId)
         {
-            Enum.TryParse<TipoVocabulario>(dto.TipoVocabulario, out TipoVocabulario tipo);
+            var tipoSalvar = char.ToUpper(dto.TipoVocabulario[0]) + dto.TipoVocabulario.Substring(1);
+
+            Enum.TryParse<TipoVocabulario>(tipoSalvar, out TipoVocabulario tipo);
 
             var voc = new Vocabulario(userId, tipo, dto.EmIngles, dto.Traducao, dto.Explicacao);
 
+            _vocabularioRepository.Adicionar(voc);
+
             return new VocabularioDto()
             {
+                Id = voc.Id,
                 EmIngles = voc.EmIngles,
                 Explicacao = voc.Explicacao,
                 TipoVocabulario = voc.TipoVocabulario.ToString(),

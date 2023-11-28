@@ -40,6 +40,7 @@ namespace InglesApp.DI
             }
 
 
+            services.AddControllers();
             services.ConfigurarDocumentacaoSwagger();
 
             services.AdicionarServicos();
@@ -65,7 +66,8 @@ namespace InglesApp.DI
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequiredLength = 8;
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 6;
             })
                 .AddRoles<Role>()
                 .AddRoleManager<RoleManager<Role>>()

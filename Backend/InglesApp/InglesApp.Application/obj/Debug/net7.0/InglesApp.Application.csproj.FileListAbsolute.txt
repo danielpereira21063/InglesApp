@@ -13,3 +13,4 @@ D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Application\o
 D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Application\obj\Debug\net7.0\refint\InglesApp.Application.dll
 D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Application\obj\Debug\net7.0\InglesApp.Application.pdb
 D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Application\obj\Debug\net7.0\ref\InglesApp.Application.dll
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Application\obj\Debug\net7.0\InglesApp.Application.sourcelink.json
