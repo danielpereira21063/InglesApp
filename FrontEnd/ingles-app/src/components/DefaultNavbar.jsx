@@ -4,10 +4,12 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import { useNavigate } from 'react-router-dom';
+import { useUser } from '../Contexts/UserContext';
+import { NavDropdown } from 'react-bootstrap';
 
 
 const DefaultNavbar = () => {
+  const { user, logout } = useUser();
 
   return (
     <>
@@ -30,29 +32,37 @@ const DefaultNavbar = () => {
               <Nav className="justify-content-end flex-grow-1 pe-3">
                 <Nav.Link href="/"><i className="fa-solid fa-house"></i> Início</Nav.Link>
                 <Nav.Link href="/praticar"><i className="fa-solid fa-book-open-reader"></i> Praticar</Nav.Link>
-                {/* <NavDropdown
-                  title="Daniel"
-                  id={`offcanvasNavbarDropdown-expand-md`}
-                >
-                  <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                  <NavDropdown.Item href="#action4">
-                    Another action
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action5">
-                    Something else here
-                  </NavDropdown.Item>
-                </NavDropdown> */}
+                <Nav.Link href="/usuario/novo"><i className="fa-solid fa-plus"></i> Nova conta</Nav.Link>
+
+                {
+                  user ?
+                    <NavDropdown
+                      title={user.nome}
+                      id={`offcanvasNavbarDropdown-expand-md`}
+                    >
+                      <NavDropdown.Item onClick={logout} href="/login" className='text-danger'>
+                        <i className="fa-solid fa-right-from-bracket"></i> Sair
+                      </NavDropdown.Item>
+                    </NavDropdown>
+                    : (<Nav.Link href="/login"><i className="fa-solid fa-right-to-bracket"></i> Login</Nav.Link>)
+                }
+
+
               </Nav>
-              <Form className="d-flex mt-3">
-                <Form.Control
-                  type="search"
-                  placeholder="Busque palavras ou frases..."
-                  className="me-2 form-control-sm"
-                  aria-label="Search"
-                />
-                <Button variant="outline-light"><i className="fa-solid fa-magnifying-glass"></i></Button>
-              </Form>
+
+              {user && (
+
+                <Form className="d-flex mt-3">
+                  <Form.Control
+                    type="search"
+                    placeholder="Busque palavras ou frases..."
+                    className="me-2 form-control-sm"
+                    aria-label="Search"
+                  />
+                  <Button variant="outline-light"><i className="fa-solid fa-magnifying-glass"></i></Button>
+                </Form>
+
+              )}
             </Offcanvas.Body>
           </Navbar.Offcanvas>
         </Container>

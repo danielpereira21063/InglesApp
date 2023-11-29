@@ -52,9 +52,9 @@ namespace InglesApp.Application.Services.Account
 
         }
 
-        public User ObterUsuarioAsync(string nomeUsuario)
+        public User ObterUsuarioAsync(string nomeUsuarioEmail)
         {
-            var user =_userManager.Users.FirstOrDefault(x => x.UserName.ToLower() == nomeUsuario.ToLower());
+            var user =_userManager.Users.FirstOrDefault(x => x.UserName.ToLower() == nomeUsuarioEmail.ToLower() || x.Email.ToLower() == nomeUsuarioEmail.ToLower());
             return user;
         }
 
@@ -63,9 +63,9 @@ namespace InglesApp.Application.Services.Account
             return await _userManager.FindByNameAsync(nomeUsuario) != null;
         }
 
-        public async Task<SignInResult> ValidarSenhaAsync(string nomeUsuario, string senha)
+        public async Task<SignInResult> ValidarSenhaAsync(string nomeUsuarioEmail, string senha)
         {
-            var user = _userManager.Users.FirstOrDefault(user => user.UserName == nomeUsuario);
+            var user = _userManager.Users.FirstOrDefault(user => user.UserName == nomeUsuarioEmail|| user.Email == nomeUsuarioEmail);
 
             if (user == null) return null;
 
