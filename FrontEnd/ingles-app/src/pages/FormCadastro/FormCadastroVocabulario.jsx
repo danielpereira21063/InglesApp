@@ -21,7 +21,7 @@ function FormCadastroVocabulario() {
             try {
                 const response = await api.get(`/vocabulario/${id}`);
                 setVocabulario(response.data);
-                setTipoSelecionado(response.data.tipoVocabulario); // Set tipoSelecionado based on fetched data
+                setTipoSelecionado(response.data.tipoVocabulario);
             } catch (error) {
                 toast.error(error?.response?.data ?? "Erro")
             }
@@ -76,8 +76,12 @@ function FormCadastroVocabulario() {
 
             toast.success(response.data);
 
-            if (id == 0) {
-                form.reset();
+            const isNovo = window.location.pathname.toLowerCase().includes("novo")
+            if (isNovo) {
+                setTimeout(() => {
+
+                    window.location.href = "/";
+                }, 1000);
             }
 
             setTipoSelecionado("Palavra");
@@ -90,6 +94,7 @@ function FormCadastroVocabulario() {
 
     return (
         <Form noValidate validated={validated} onSubmit={handleSubmit} className='px-2'>
+            <h5 className='mb-3 text-center'>Novo vocabulário</h5>
             <Row className="mb-3">
                 <Form.Group as={Col} md="4" controlId="validationCustom01" className='mb-3'>
                     <Form.Label>Tipo</Form.Label>
@@ -111,7 +116,7 @@ function FormCadastroVocabulario() {
                         required
                         type="text"
                         name="palavra"
-                        placeholder="Palavra em inglês"
+                        placeholder={`${tipoSelecionado} em inglês`}
                         defaultValue={vocabulario?.emIngles || ''}
                     />
                     <Form.Control.Feedback type="invalid">

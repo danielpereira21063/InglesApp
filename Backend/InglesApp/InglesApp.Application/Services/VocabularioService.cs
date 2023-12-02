@@ -3,7 +3,6 @@ using InglesApp.Application.Services.Interfaces;
 using InglesApp.Domain.Entities;
 using InglesApp.Domain.Enums;
 using InglesApp.Domain.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace InglesApp.Application.Services
 {
@@ -31,9 +30,9 @@ namespace InglesApp.Application.Services
             };
         }
 
-        public ICollection<VocabularioDto> ObterPesquisa(string pesquisa, int userId, TipoVocabulario? tipo)
+        public ICollection<VocabularioDto> ObterPesquisa(string pesquisa, int userId, TipoVocabulario? tipo, DateTime de, DateTime ate)
         {
-            return _vocabularioRepository.ObterPesquisa(pesquisa, userId, tipo)
+            return _vocabularioRepository.ObterPesquisa(pesquisa, userId, tipo, de, ate)
                 .Select(voc => new VocabularioDto()
                 {
                     Id = voc.Id,

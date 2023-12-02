@@ -11,13 +11,12 @@ namespace InglesApp.Domain.Entities
 
         public Vocabulario(int userId, TipoVocabulario tipoVocabulario, string emIngles, string traducao, string explicacao)
         {
-            if (emIngles.Split(" ").Length == 1 && tipoVocabulario == TipoVocabulario.Frase)
-            {
-                tipoVocabulario = TipoVocabulario.Palavra;
-            }
+            //if (emIngles.Split(" ").Length == 1 && tipoVocabulario == TipoVocabulario.Frase)
+            //{
+            //    tipoVocabulario = TipoVocabulario.Palavra;
+            //}
 
             UserId = userId;
-
             TipoVocabulario = tipoVocabulario;
             EmIngles = emIngles;
             Traducao = traducao;
@@ -32,6 +31,7 @@ namespace InglesApp.Domain.Entities
         public string Traducao { get; set; }
         public string Explicacao { get; set; }
         public bool Inativo { get; set; }
+        public ICollection<Pratica> Praticas { get; set; }
 
         private void Validar()
         {

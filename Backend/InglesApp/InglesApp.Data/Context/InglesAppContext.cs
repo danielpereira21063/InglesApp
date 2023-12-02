@@ -11,13 +11,17 @@ namespace InglesApp.Data.Context
         public InglesAppContext(DbContextOptions<InglesAppContext> options) : base(options) { }
 
         public DbSet<Vocabulario> Vocabularios { get; set; }
+        public DbSet<Pratica> Praticas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Vocabulario>()
-                .HasKey(v => v.Id );
+                .HasKey(v => v.Id);
+
+            modelBuilder.Entity<Pratica>()
+                .HasKey(p => p.Id);
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(InglesAppContext).Assembly);
         }

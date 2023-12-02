@@ -7,6 +7,8 @@ namespace InglesApp.Domain.Identity
     {
         public string Nome { get; set; }
         public ICollection<UserRole> UserRoles { get; set; }
+
         public ICollection<Vocabulario> Vocabularios { get; set; }
+        public ICollection<Pratica> Praticas { get; set; }
     }
 }

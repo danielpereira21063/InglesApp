@@ -19,6 +19,37 @@ namespace InglesApp.Data.Migrations
                 .HasAnnotation("ProductVersion", "7.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("InglesApp.Domain.Entities.Pratica", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Acertou")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Resposta")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VocabularioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("VocabularioId");
+
+                    b.ToTable("Praticas");
+                });
+
             modelBuilder.Entity("InglesApp.Domain.Entities.Vocabulario", b =>
                 {
                     b.Property<int>("Id")
@@ -276,6 +307,23 @@ namespace InglesApp.Data.Migrations
                     b.HasDiscriminator().HasValue("UserRole");
                 });
 
+            modelBuilder.Entity("InglesApp.Domain.Entities.Pratica", b =>
+                {
+                    b.HasOne("InglesApp.Domain.Identity.User", null)
+                        .WithMany("Praticas")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("InglesApp.Domain.Entities.Vocabulario", "Vocabulario")
+                        .WithMany("Praticas")
+                        .HasForeignKey("VocabularioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Vocabulario");
+                });
+
             modelBuilder.Entity("InglesApp.Domain.Entities.Vocabulario", b =>
                 {
                     b.HasOne("InglesApp.Domain.Identity.User", null)
@@ -355,6 +403,11 @@ namespace InglesApp.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("InglesApp.Domain.Entities.Vocabulario", b =>
+                {
+                    b.Navigation("Praticas");
+                });
+
             modelBuilder.Entity("InglesApp.Domain.Identity.Role", b =>
                 {
                     b.Navigation("UserRoles");
@@ -362,6 +415,8 @@ namespace InglesApp.Data.Migrations
 
             modelBuilder.Entity("InglesApp.Domain.Identity.User", b =>
                 {
+                    b.Navigation("Praticas");
+
                     b.Navigation("UserRoles");
 
                     b.Navigation("Vocabularios");

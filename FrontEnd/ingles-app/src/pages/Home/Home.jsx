@@ -12,13 +12,14 @@ function Home() {
     const [periodo, setPeriodo] = useState(1);
     const [loading, setLoading] = useState(true);
     const [periodoFormatado, setPeriodoFormatado] = useState("");
-
+    const [pesquisa, setPesquisa] = useState("");
     useEffect(() => {
+        setVocabularies([]);
         const fetchVocabularies = async () => {
             setLoading(true);
 
             try {
-                const response = await api.get(`/Vocabulario/Pesquisar?tipo=${tipoSelecionado}&`);
+                const response = await api.get(`/Vocabulario/Pesquisar?pesquisa=${pesquisa}&tipo=${tipoSelecionado}&periodo=${periodo}`);
                 setVocabularies(response.data);
             } catch (error) {
                 toast.error(error?.response?.data ?? "Erro ao carregar dados");
@@ -27,7 +28,7 @@ function Home() {
             setLoading(false);
         };
 
-        
+
         switch (Number(periodo)) {
             case 1:
                 setPeriodoFormatado("Hoje");
@@ -36,14 +37,17 @@ function Home() {
                 setPeriodoFormatado("Essa semana");
                 break;
             case 3:
-                setPeriodoFormatado("Últimas 2 semanas")
+                setPeriodoFormatado("Nas Últimas 2 semanas")
                 break;
             case 4:
                 setPeriodoFormatado("Esse mês")
                 break;
+            case 5:
+                setPeriodoFormatado("No total")
+                break;
         }
         fetchVocabularies();
-    }, [tipoSelecionado, periodo]);
+    }, [tipoSelecionado, periodo, pesquisa]);
 
     const handleChangeSelecionado = (event) => {
         setTipoSelecionado(event.target.value);
@@ -54,6 +58,10 @@ function Home() {
         console.log(periodo)
     };
 
+    const handleChangePesquisa = (event) => {
+        setPesquisa(event.target.value);
+    };
+
 
     const handleEditClick = (vocabularyId) => {
         window.location.href = "/vocabulario/" + vocabularyId;
@@ -61,8 +69,8 @@ function Home() {
     return (
         <>
             {vocabularies.length > 0 &&
-                <div className='alert alert-warning p-3'>
-                    <p className='p-0 m-0'>Você aprendeu <strong>{vocabularies.length} {tipoSelecionado == 1 ? 'Frases'.toLowerCase() : 'Palavras'.toLowerCase()} {periodoFormatado.toLowerCase()} </strong></p>
+                <div className='alert alert-light p-3'>
+                    <p className='p-0 m-0'><i className="fa-solid fa-hands-clapping"></i> Você aprendeu <strong>{vocabularies.length} {tipoSelecionado == 1 ? 'Frases'.toLowerCase() : 'Palavras'.toLowerCase()}</strong> {periodoFormatado.toLowerCase()}!</p>
                 </div>
             }
 
@@ -70,17 +78,17 @@ function Home() {
                 <div className="col">
                     <Form.Select
                         aria-label="Default select example"
-                        className='mb-3'
+                        className='mb-2'
                         onChange={handleChangeSelecionado}
                         value={tipoSelecionado}
                     >
-                        <option value={1}>Frases</option>
-                        <option value={2}>Palavras</option>
+                        <option value={1}>Palavras</option>
+                        <option value={2}>Frases</option>
                     </Form.Select>
                 </div>
                 <div className="col">
                     <Form.Select
-                        className='mb-3'
+                        className='mb-2'
                         onChange={handleChangePeriodo}
                         value={periodo}
                     >
@@ -88,19 +96,30 @@ function Home() {
                         <option value={2}>Essa semana</option>
                         <option value={3}>Duas semanas</option>
                         <option value={4}>Esse mês</option>
+                        <option value={5}>Tudo</option>
                     </Form.Select>
                 </div>
 
             </div>
 
+            <Form className="d-flex mb-2">
+                <Form.Control
+                    onChange={handleChangePesquisa}
+                    type="search"
+                    placeholder="Busque palavras ou frases..."
+                    className="me-2"
+                    aria-label="Search"
+                    value={pesquisa}
+                />
+            </Form>
 
             {vocabularies.map((vocab) => (
                 <Card key={vocab.id} className='mb-2'>
                     <Card.Header as="h5">
-                        <i className="fa-solid fa-language fa-xs"></i>  {vocab.emIngles}
+                        {vocab.emIngles}
                     </Card.Header>
                     <Card.Body>
-                        <Card.Title>
+                        <Card.Title className='text-decoration-underline' style={{ cursor: 'pointer' }} onClick={() => VozUtil.falarTexto(vocab.traducao, 1.0, 'pt_BR')}>
                             {vocab.traducao}
                         </Card.Title>
                         <Card.Text>
@@ -111,7 +130,7 @@ function Home() {
                     <Card.Footer>
                         <div className='d-flex justify-content-between'>
                             <div>
-                                <Button className='btn-sm' variant="secondary" onClick={() => VozUtil.falarTexto(vocab.emIngles)}>
+                                <Button className='btn-sm' variant="light" onClick={() => VozUtil.falarTexto(vocab.emIngles)}>
                                     <i className="fa-solid fa-volume-high"></i>
                                 </Button>
                             </div>

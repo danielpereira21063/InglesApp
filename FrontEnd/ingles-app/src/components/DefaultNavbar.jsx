@@ -53,20 +53,6 @@ const DefaultNavbar = () => {
 
 
               </Nav>
-
-              {user && (
-
-                <Form className="d-flex">
-                  <Form.Control
-                    type="search"
-                    placeholder="Busque palavras ou frases..."
-                    className="me-2 form-control-sm"
-                    aria-label="Search"
-                  />
-                  <Button variant="outline-light"><i className="fa-solid fa-magnifying-glass"></i></Button>
-                </Form>
-
-              )}
             </Offcanvas.Body>
           </Navbar.Offcanvas>
         </Container>

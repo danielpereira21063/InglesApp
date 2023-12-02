@@ -54,7 +54,7 @@ namespace InglesApp.Application.Services.Account
 
         public User ObterUsuarioAsync(string nomeUsuarioEmail)
         {
-            var user =_userManager.Users.FirstOrDefault(x => x.UserName.ToLower() == nomeUsuarioEmail.ToLower() || x.Email.ToLower() == nomeUsuarioEmail.ToLower());
+            var user = _userManager.Users.FirstOrDefault(x => x.UserName.ToLower() == nomeUsuarioEmail.ToLower() || x.Email.ToLower() == nomeUsuarioEmail.ToLower());
             return user;
         }
 
@@ -65,7 +65,7 @@ namespace InglesApp.Application.Services.Account
 
         public async Task<SignInResult> ValidarSenhaAsync(string nomeUsuarioEmail, string senha)
         {
-            var user = _userManager.Users.FirstOrDefault(user => user.UserName == nomeUsuarioEmail|| user.Email == nomeUsuarioEmail);
+            var user = _userManager.Users.FirstOrDefault(user => user.UserName == nomeUsuarioEmail || user.Email == nomeUsuarioEmail);
 
             if (user == null) return null;
 

@@ -11,6 +11,7 @@ namespace InglesApp.Data.Extensions
         {
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IVocabularioRepository, VocabularioRepository>();
+            services.AddTransient<IPraticaRepository, PraticaRepository>();
         }
     }
 }

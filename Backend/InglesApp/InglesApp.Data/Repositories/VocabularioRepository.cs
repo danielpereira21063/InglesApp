@@ -35,13 +35,17 @@ namespace InglesApp.Data.Repositories
                 .FirstOrDefault();
         }
 
-        public ICollection<Vocabulario> ObterPesquisa(string busca, int userId, TipoVocabulario? tipo)
+        public ICollection<Vocabulario> ObterPesquisa(string busca, int userId, TipoVocabulario? tipo, DateTime de, DateTime ate)
         {
 
             var query = _context.Vocabularios
                 .AsNoTracking()
                 .OrderByDescending(x => x.CreatedAt)
-                .Where(v => (v.EmIngles.StartsWith(busca ?? "") || v.Traducao.Contains(busca ?? "")) && v.UserId == userId && !v.Inativo);
+                .Where(v => (v.EmIngles.StartsWith(busca ?? "")
+                    || v.Traducao.Contains(busca ?? ""))
+                    && v.UserId == userId && !v.Inativo
+                    && v.CreatedAt >= de && v.CreatedAt <= ate
+                );
 
             if (tipo > 0)
             {
@@ -49,7 +53,7 @@ namespace InglesApp.Data.Repositories
             }
 
             return query
-                .Take(30)
+                .Take(500)
                 .ToList();
         }
     }

@@ -12,6 +12,7 @@ namespace InglesApp.Application.Extensions
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IVocabularioService, VocabularioService>();
+            services.AddScoped<IPraticaService, PraticaService>();
         }
     }
 }

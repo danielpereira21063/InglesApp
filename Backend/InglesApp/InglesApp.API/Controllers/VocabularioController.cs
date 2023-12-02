@@ -67,9 +67,29 @@ namespace InglesApp.API.Controllers
 
 
         [HttpGet("Pesquisar")]
-        public IActionResult Pesquisar([FromQuery] string? pesquisa = null, [FromQuery] int tipo = 0)
+        public IActionResult Pesquisar([FromQuery] string? pesquisa = null, [FromQuery] int tipo = 0, [FromQuery] int periodo = 1)
         {
-            var vocs = _vocabularioService.ObterPesquisa(pesquisa ?? "", _usuarioId, (TipoVocabulario)tipo);
+            var de = DateTime.Now.Date;
+            var ate = DateTime.Now;
+
+            switch (periodo) {
+                case 1:
+                    break;
+                case 2:
+                    de = DateTime.Now.Date.AddDays(-7);
+                    break;
+                case 3:
+                    de = DateTime.Now.Date.AddDays(-14);
+                        break;
+                case 4:
+                    de = DateTime.Now.Date.AddDays(-30);
+                    break;
+                case 5:
+                    de = DateTime.Now.Date.AddYears(-100);
+                    break;
+            }
+
+            var vocs = _vocabularioService.ObterPesquisa(pesquisa ?? "", _usuarioId, (TipoVocabulario)tipo, de, ate);
 
             return Ok(vocs);
         }
