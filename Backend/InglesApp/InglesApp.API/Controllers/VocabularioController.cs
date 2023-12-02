@@ -41,7 +41,7 @@ namespace InglesApp.API.Controllers
         {
             var voc = _vocabularioService.Obter(id);
 
-            if (voc.UserId == _usuarioId)
+            if (voc.UserId != _usuarioId)
             {
                 return BadRequest("Vocabulário não pertence ao usuário");
             }
