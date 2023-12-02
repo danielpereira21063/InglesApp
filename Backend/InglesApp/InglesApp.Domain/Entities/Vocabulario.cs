@@ -31,6 +31,7 @@ namespace InglesApp.Domain.Entities
         public string EmIngles { get; set; }
         public string Traducao { get; set; }
         public string Explicacao { get; set; }
+        public bool Inativo { get; set; }
 
         private void Validar()
         {

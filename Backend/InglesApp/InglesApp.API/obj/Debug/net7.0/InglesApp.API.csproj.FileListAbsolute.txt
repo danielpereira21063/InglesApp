@@ -67,3 +67,4 @@ D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.API\obj\Debug
 D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.API\obj\Debug\net7.0\InglesApp.API.genruntimeconfig.cache
 D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.API\obj\Debug\net7.0\ref\InglesApp.API.dll
 D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.API\obj\Debug\net7.0\InglesApp.API.sourcelink.json
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.API\obj\Debug\net7.0\InglesApp.API.MvcApplicationPartsAssemblyInfo.cs

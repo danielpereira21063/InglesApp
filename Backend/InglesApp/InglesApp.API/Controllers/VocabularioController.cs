@@ -1,5 +1,7 @@
-﻿using InglesApp.Application.Dto;
+﻿using InglesApp.API.Extensions;
+using InglesApp.Application.Dto;
 using InglesApp.Application.Services.Interfaces;
+using InglesApp.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +13,7 @@ namespace InglesApp.API.Controllers
     public class VocabularioController : ControllerBase
     {
         private readonly IVocabularioService _vocabularioService;
+        private int _usuarioId => User.ObterIdDoUsuarioAtual();
 
         public VocabularioController(IVocabularioService vocabularioService)
         {
@@ -18,18 +21,55 @@ namespace InglesApp.API.Controllers
         }
 
 
+
         [HttpPost]
         public IActionResult Post(VocabularioDto vocabularioDto)
         {
-            var voc = _vocabularioService.Salvar(vocabularioDto, 1);
+            if (vocabularioDto.Id > 0)
+            {
+                if (vocabularioDto.UserId != _usuarioId) return BadRequest("Vocabulário não pertence ao usuário logado");
+            }
+
+            var voc = _vocabularioService.Salvar(vocabularioDto, _usuarioId);
 
             return Ok("Salvo com sucesso");
         }
 
-        [HttpGet]
-        public IActionResult Get([FromQuery] string? pesquisa)
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
         {
-            var vocs = _vocabularioService.ObterPesquisa(pesquisa, 1);
+            var voc = _vocabularioService.Obter(id);
+
+            if (voc.UserId == _usuarioId)
+            {
+                return BadRequest("Vocabulário não pertence ao usuário");
+            }
+
+            voc.Inativo = true;
+
+            _vocabularioService.Salvar(voc, _usuarioId);
+
+            return Ok("Deletado com sucesso");
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var vocabulario = _vocabularioService.Obter(id);
+
+            if (vocabulario == null) return BadRequest("Vocabulário não existe");
+
+            if (vocabulario.UserId != _usuarioId) return BadRequest("Vocabulário não pertence ao usuário logado");
+
+            return Ok(vocabulario);
+        }
+
+
+        [HttpGet("Pesquisar")]
+        public IActionResult Pesquisar([FromQuery] string? pesquisa = null, [FromQuery] int tipo = 0)
+        {
+            var vocs = _vocabularioService.ObterPesquisa(pesquisa ?? "", _usuarioId, (TipoVocabulario)tipo);
 
             return Ok(vocs);
         }

@@ -1,13 +1,16 @@
 import './App.css';
 import Home from './pages/Home/Home';
-import DefaultNavbar from './components/DefaultNavbar';
 import { Button, Container } from 'react-bootstrap';
+import DefaultNavbar from './components/DefaultNavbar';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import FormCadastroVocabulario from './pages/FormCadastro/FormCadastroVocabulario';
 import FormCadastroUsuario from './pages/FormCadastro/FormCadastroUsuario';
-import FormLogin from './pages/FormCadastro/FormLogin';
+import FormLogin from './pages/FormLogin';
 import DefaultFooter from './components/DefaultFooter';
 import { UserProvider, useUser } from './Contexts/UserContext';
+import { ToastContainer } from 'react-toastify';
+
+const isHome = window.location.pathname == "/";
 
 function App() {
   return (
@@ -28,18 +31,28 @@ function InnerApp() {
 
       <Container>
         <Routes>
-
-          <Route path="/" element={user != null ? <Home /> : <Navigate to={"/login"}/>} />
+          <Route path="/" element={user != null ? <Home /> : <Navigate to={"/login"} />} />
           <Route path="/vocabulario/novo" element={<FormCadastroVocabulario />} />
-
+          <Route path="/vocabulario/:id" element={<FormCadastroVocabulario />} />
           <Route path="/usuario/novo" element={<FormCadastroUsuario />} />
+
           <Route path="/login" element={<FormLogin />} />
         </Routes>
+
       </Container>
+      <ToastContainer />
 
       <DefaultFooter />
 
-      <Button onClick={() => window.location.href = "/vocabulario/novo"} className='flutuante btn-lg rounded-circle'><i className="fa-solid fa-plus"></i></Button>
+
+      {/* Botões fixos na parte inferior */}
+      <div className='fixed-buttons'>
+        {!isHome && 
+          <Button variant='light' onClick={() => window.history.back()} className='rounded-circle me-1'><i className="fa-solid fa-arrow-left"></i></Button>
+        }
+        <Button onClick={() => window.location.href = "/vocabulario/novo"} className='ml-2 rounded-circle'><i className="fa-solid fa-plus"></i></Button>
+      </div>
+
     </div>
   );
 }

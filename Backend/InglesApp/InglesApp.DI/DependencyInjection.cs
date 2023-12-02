@@ -95,15 +95,24 @@ namespace InglesApp.DI
 
         private static IServiceCollection ConfigurarCors(this IServiceCollection services)
         {
-            string[] allowedHosts = new string[] { "http://localhost:3000", "https://ingles-app.danielsanchesdev.com.br" };
+            string[] allowedHosts = new string[] {
+                "https://ingles-app.danielsanchesdev.com.br"
+            };
 
             services.AddCors(options =>
             {
-                options.AddPolicy("Default", builder =>
+                options.AddPolicy("Production", builder =>
+                {
+                    builder
+                        .WithOrigins(allowedHosts)
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+
+                options.AddPolicy("Development", builder =>
                 {
                     builder
                         .AllowAnyOrigin()
-                        .WithOrigins(allowedHosts)
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });

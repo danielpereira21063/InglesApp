@@ -7,13 +7,20 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
-app.Urls.Add("https://localhost:7014");
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
+    app.Urls.Add("https://localhost:7014");
+    app.UseCors("Development");
+
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+else
+{
+    app.Urls.Add("http://localhost:7015");
+    app.UseCors("Production");
 }
 
 app.Use(async (context, next) =>
@@ -29,6 +36,13 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseCors("Default");
+
+//app.UseCors(options =>
+//{
+//    options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+//});
+
+
+
 
 app.Run();

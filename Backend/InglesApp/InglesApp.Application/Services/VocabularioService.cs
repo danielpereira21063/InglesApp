@@ -3,6 +3,7 @@ using InglesApp.Application.Services.Interfaces;
 using InglesApp.Domain.Entities;
 using InglesApp.Domain.Enums;
 using InglesApp.Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace InglesApp.Application.Services
 {
@@ -21,6 +22,8 @@ namespace InglesApp.Application.Services
 
             return new VocabularioDto()
             {
+                Id = voc.Id,
+                UserId = voc.UserId,
                 EmIngles = voc.EmIngles,
                 Explicacao = voc.Explicacao,
                 TipoVocabulario = voc.TipoVocabulario.ToString(),
@@ -28,12 +31,13 @@ namespace InglesApp.Application.Services
             };
         }
 
-        public ICollection<VocabularioDto> ObterPesquisa(string pesquisa, int userId)
+        public ICollection<VocabularioDto> ObterPesquisa(string pesquisa, int userId, TipoVocabulario? tipo)
         {
-            return _vocabularioRepository.ObterPesquisa(pesquisa, userId)
+            return _vocabularioRepository.ObterPesquisa(pesquisa, userId, tipo)
                 .Select(voc => new VocabularioDto()
                 {
                     Id = voc.Id,
+                    UserId = voc.UserId,
                     EmIngles = voc.EmIngles,
                     Explicacao = voc.Explicacao,
                     TipoVocabulario = voc.TipoVocabulario.ToString(),
@@ -49,12 +53,25 @@ namespace InglesApp.Application.Services
             Enum.TryParse<TipoVocabulario>(tipoSalvar, out TipoVocabulario tipo);
 
             var voc = new Vocabulario(userId, tipo, dto.EmIngles, dto.Traducao, dto.Explicacao);
+            if (dto.Id >= 1)
+            {
+                var antigo = _vocabularioRepository.Obter(dto.Id);
 
-            _vocabularioRepository.Adicionar(voc);
+                voc.Id = antigo.Id;
+                voc.CreatedAt = antigo.CreatedAt;
+
+                _vocabularioRepository.Atualizar(voc);
+            }
+            else
+            {
+                _vocabularioRepository.Adicionar(voc);
+            }
+
 
             return new VocabularioDto()
             {
                 Id = voc.Id,
+                UserId = voc.UserId,
                 EmIngles = voc.EmIngles,
                 Explicacao = voc.Explicacao,
                 TipoVocabulario = voc.TipoVocabulario.ToString(),

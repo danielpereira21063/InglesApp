@@ -36,6 +36,9 @@ namespace InglesApp.Data.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<bool>("Inativo")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<int>("TipoVocabulario")
                         .HasColumnType("int");
 

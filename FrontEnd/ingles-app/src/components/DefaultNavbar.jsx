@@ -31,7 +31,11 @@ const DefaultNavbar = () => {
             <Offcanvas.Body>
               <Nav className="justify-content-end flex-grow-1 pe-3">
                 <Nav.Link href="/"><i className="fa-solid fa-house"></i> Início</Nav.Link>
-                <Nav.Link href="/praticar"><i className="fa-solid fa-book-open-reader"></i> Praticar</Nav.Link>
+
+                {user && (
+                  <Nav.Link href="/praticar"><i className="fa-solid fa-book-open-reader"></i> Praticar</Nav.Link>
+                )}
+
                 <Nav.Link href="/usuario/novo"><i className="fa-solid fa-plus"></i> Nova conta</Nav.Link>
 
                 {
@@ -52,7 +56,7 @@ const DefaultNavbar = () => {
 
               {user && (
 
-                <Form className="d-flex mt-3">
+                <Form className="d-flex">
                   <Form.Control
                     type="search"
                     placeholder="Busque palavras ou frases..."

@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "RmzIXkbFBQq2h6OcEMqmhnoXSmBAyNm4PoD5BUsz0m4=",
+  "Source": "InglesApp.API",
+  "BasePath": "_content/InglesApp.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
