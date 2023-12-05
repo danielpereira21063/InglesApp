@@ -8,7 +8,7 @@ import { VozUtil } from '../../util/VozUtil';
 
 function Home() {
     const [vocabularies, setVocabularies] = useState([]);
-    const [tipoSelecionado, setTipoSelecionado] = useState(1);
+    const [tipoSelecionado, setTipoSelecionado] = useState(0);
     const [periodo, setPeriodo] = useState(1);
     const [loading, setLoading] = useState(true);
     const [periodoFormatado, setPeriodoFormatado] = useState("");
@@ -46,7 +46,10 @@ function Home() {
                 setPeriodoFormatado("No total")
                 break;
         }
-        fetchVocabularies();
+
+        setTimeout(() => {
+            fetchVocabularies();
+        }, 100);
     }, [tipoSelecionado, periodo, pesquisa]);
 
     const handleChangeSelecionado = (event) => {
@@ -62,7 +65,6 @@ function Home() {
         setPesquisa(event.target.value);
     };
 
-
     const handleEditClick = (vocabularyId) => {
         window.location.href = "/vocabulario/" + vocabularyId;
     };
@@ -70,9 +72,13 @@ function Home() {
         <>
             {vocabularies.length > 0 &&
                 <div className='alert alert-light p-3'>
-                    <p className='p-0 m-0'><i className="fa-solid fa-hands-clapping"></i> Você aprendeu <strong>{vocabularies.length} {tipoSelecionado == 1 ? 'Frases'.toLowerCase() : 'Palavras'.toLowerCase()}</strong> {periodoFormatado.toLowerCase()}!</p>
+                    <p className='p-0 m-0'><i className="fa-solid fa-hands-clapping"></i> Você aprendeu <strong>{vocabularies.length} {tipoSelecionado == 1 ? 'Frases'.toLowerCase() : (tipoSelecionado == 2 ? 'Palavras'.toLowerCase() : 'vocabulários')}</strong> {periodoFormatado.toLowerCase()}!</p>
                 </div>
             }
+
+            {(vocabularies.length == 0 && !loading) && (
+                <div className='alert alert-warning'>Oooops, nenhum vocabulário foi encontrado para este filtro :(</div>
+            )}
 
             <div className='row'>
                 <div className="col">
@@ -82,6 +88,7 @@ function Home() {
                         onChange={handleChangeSelecionado}
                         value={tipoSelecionado}
                     >
+                        <option value={0}>Tudo</option>
                         <option value={1}>Palavras</option>
                         <option value={2}>Frases</option>
                     </Form.Select>
@@ -107,45 +114,41 @@ function Home() {
                     onChange={handleChangePesquisa}
                     type="search"
                     placeholder="Busque palavras ou frases..."
-                    className="me-2"
                     aria-label="Search"
                     value={pesquisa}
                 />
             </Form>
 
             {vocabularies.map((vocab) => (
-                <Card key={vocab.id} className='mb-2'>
-                    <Card.Header as="h5">
-                        {vocab.emIngles}
+                <Card key={vocab.id} className='border shadow mb-3'>
+                    <Card.Header as="h5" cla style={{ cursor: 'pointer'}} className='bg-secondary'>
+                        <div className="d-flex">
+                            <div className="col-11">
+                                <span onClick={() => VozUtil.falarTexto(vocab.emIngles)}>{vocab.emIngles} <i className="fa-solid fa-volume-high fa-2xs"></i></span>
+                            </div>
+                            <div className="col-1">
+                                <Button className='btn-sm text-light' variant='outline-secondary' onClick={() => handleEditClick(vocab.id)}>
+                                    <i className="fa-solid fa-pencil"></i>
+                                </Button>
+                            </div>
+                        </div>
                     </Card.Header>
                     <Card.Body>
-                        <Card.Title className='text-decoration-underline' style={{ cursor: 'pointer' }} onClick={() => VozUtil.falarTexto(vocab.traducao, 1.0, 'pt_BR')}>
-                            {vocab.traducao}
-                        </Card.Title>
+                        <Card.Text style={{ cursor: 'pointer' }} onClick={() => VozUtil.falarTexto(vocab.traducao, 1.0, 'pt_BR')}>
+                            <strong>{vocab.traducao}</strong> <i className="fa-solid fa-volume-high fa-2xs"></i>
+                        </Card.Text>
                         <Card.Text>
                             <small>{vocab.explicacao}</small>
                         </Card.Text>
                     </Card.Body>
 
-                    <Card.Footer>
+                    {/* <Card.Footer>
                         <div className='d-flex justify-content-between'>
-                            <div>
-                                <Button className='btn-sm' variant="light" onClick={() => VozUtil.falarTexto(vocab.emIngles)}>
-                                    <i className="fa-solid fa-volume-high"></i>
-                                </Button>
-                            </div>
 
-                            <Button className='btn-sm' variant='outline-light' onClick={() => handleEditClick(vocab.id)}>
-                                <i className="fa-solid fa-pencil"></i>
-                            </Button>
                         </div>
-                    </Card.Footer>
+                    </Card.Footer> */}
                 </Card>
             ))}
-
-            {(vocabularies.length == 0 && !loading) && (
-                <div className='alert alert-warning'>Oooops, nenhum vocabulário foi encontrado para este filtro :(</div>
-            )}
 
             {loading && (
                 <div className='d-flex justify-content-center'>

@@ -1,4 +1,5 @@
 ﻿using InglesApp.API.Extensions;
+using InglesApp.API.Pratica;
 using InglesApp.Application.Dto;
 using InglesApp.Application.Services.Interfaces;
 using InglesApp.Domain.Enums;
@@ -67,31 +68,95 @@ namespace InglesApp.API.Controllers
 
 
         [HttpGet("Pesquisar")]
-        public IActionResult Pesquisar([FromQuery] string? pesquisa = null, [FromQuery] int tipo = 0, [FromQuery] int periodo = 1)
+        public IActionResult Pesquisar([FromQuery] string? pesquisa = null,
+                                       [FromQuery] int tipo = 0,
+                                       [FromQuery] int periodo = 1,
+                                       [FromQuery] bool praticando = false)
         {
-            var de = DateTime.Now.Date;
-            var ate = DateTime.Now;
+            try
+            {
+                var de = DateTime.Now.Date;
+                var ate = DateTime.Now;
 
-            switch (periodo) {
-                case 1:
-                    break;
-                case 2:
-                    de = DateTime.Now.Date.AddDays(-7);
-                    break;
-                case 3:
-                    de = DateTime.Now.Date.AddDays(-14);
+                switch (periodo)
+                {
+                    case 1:
                         break;
-                case 4:
-                    de = DateTime.Now.Date.AddDays(-30);
-                    break;
-                case 5:
-                    de = DateTime.Now.Date.AddYears(-100);
-                    break;
+                    case 2:
+                        de = DateTime.Now.Date.AddDays(-7);
+                        break;
+                    case 3:
+                        de = DateTime.Now.Date.AddDays(-14);
+                        break;
+                    case 4:
+                        de = DateTime.Now.Date.AddDays(-30);
+                        break;
+                    case 5:
+                        de = DateTime.Now.Date.AddYears(-100);
+                        break;
+                }
+
+                var vocs = _vocabularioService.ObterPesquisa(pesquisa ?? "", _usuarioId, (TipoVocabulario)tipo, de, ate, praticando: praticando);
+
+                Random random = new Random();
+                if (praticando)
+                {
+                    var retorno = new List<PraticaModel>();
+                    foreach (var vocabulario in vocs)
+                    {
+                        var praticaDeTraducao = random.Next(1, 101) % 2 == 0;
+
+                        var numRandom = random.Next(1, 101);
+
+                        List<string> opcoes = new List<string>();
+
+                        //var vocsOpcoes = _vocabularioService.ObterPesquisa("", _usuarioId, (TipoVocabulario)tipo, de, ate, praticando: true, 5000);
+
+                        if (numRandom < 51)
+                        {
+                            if (praticaDeTraducao)
+                            {
+                                opcoes = vocs
+                                    .OrderBy(x => Guid.NewGuid())
+                                    .Where(x => x.Traducao != vocabulario.Traducao)
+                                    .Select(v => v.Traducao)
+                                    .Distinct()
+                                    .Take(3)
+                                    .ToList();
+
+                                opcoes.Insert(opcoes.Count - 1, vocabulario.Traducao);
+                            }
+                            else
+                            {
+                                opcoes = vocs
+                                    .OrderBy(x => Guid.NewGuid())
+                                    .Where(x => x.EmIngles != vocabulario.EmIngles)
+                                    .Select(v => v.EmIngles)
+                                    .Distinct()
+                                    .Take(3)
+                                    .ToList();
+
+                                opcoes.Insert(opcoes.Count - 1, vocabulario.EmIngles);
+
+                            }
+
+                        }
+
+                        var model = new PraticaModel(vocabulario, opcoes.OrderBy(x => Guid.NewGuid()).ToArray(), praticaDeTraducao);
+
+                        retorno.Add(model);
+                    }
+
+                    return Ok(retorno);
+                }
+
+                return Ok(vocs);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
 
-            var vocs = _vocabularioService.ObterPesquisa(pesquisa ?? "", _usuarioId, (TipoVocabulario)tipo, de, ate);
-
-            return Ok(vocs);
         }
     }
 }

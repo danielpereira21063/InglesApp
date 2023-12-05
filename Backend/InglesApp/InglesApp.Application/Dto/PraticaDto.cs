@@ -9,7 +9,7 @@
         public bool Acertou { get; set; }
 
         //indica em porcentagem o quanto a respota do usuário se parece com a resposta correta
-        public double SimilaridadeDeAcerto {  get; set; }
+        public double SimilaridadeDeAcerto { get; set; }
 
         public DateTime CreatedAt { get; set; }
     }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "nytxsap2c189M7ngfnqNrWM8fxKwlt5676jtIYE5UXf7b/l9gRs6qegezUxFT++Rx4M+mUqFVa1uZb8Ox7/ZFQ==",
+  "dgSpecHash": "mqjtpW0z6XEyqUPFqYzUuqJqnW+hrJd3SligLfqkqxuDpI5k4+QivQhVQAu4kcK9X1PoOKHDBye0cJ3HwADU7A==",
   "success": true,
   "projectFilePath": "D:\\Projetos\\ProjetosPessoais\\InglesApp\\Backend\\InglesApp\\InglesApp.API\\InglesApp.API.csproj",
   "expectedPackageFiles": [
@@ -83,10 +83,7 @@
     "C:\\Users\\Daniel\\.nuget\\packages\\system.text.encoding\\4.3.0\\system.text.encoding.4.3.0.nupkg.sha512",
     "C:\\Users\\Daniel\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
     "C:\\Users\\Daniel\\.nuget\\packages\\system.text.json\\7.0.0\\system.text.json.7.0.0.nupkg.sha512",
-    "C:\\Users\\Daniel\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.14\\microsoft.netcore.app.ref.7.0.14.nupkg.sha512",
     "C:\\Users\\Daniel\\.nuget\\packages\\microsoft.netcore.app.runtime.linux-arm64\\7.0.14\\microsoft.netcore.app.runtime.linux-arm64.7.0.14.nupkg.sha512",
-    "C:\\Users\\Daniel\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.14\\microsoft.windowsdesktop.app.ref.7.0.14.nupkg.sha512",
-    "C:\\Users\\Daniel\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.14\\microsoft.aspnetcore.app.ref.7.0.14.nupkg.sha512",
     "C:\\Users\\Daniel\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.linux-arm64\\7.0.14\\microsoft.aspnetcore.app.runtime.linux-arm64.7.0.14.nupkg.sha512",
     "C:\\Users\\Daniel\\.nuget\\packages\\microsoft.netcore.app.host.linux-arm64\\7.0.14\\microsoft.netcore.app.host.linux-arm64.7.0.14.nupkg.sha512"
   ],

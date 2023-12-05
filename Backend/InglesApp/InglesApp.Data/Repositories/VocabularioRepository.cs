@@ -35,25 +35,29 @@ namespace InglesApp.Data.Repositories
                 .FirstOrDefault();
         }
 
-        public ICollection<Vocabulario> ObterPesquisa(string busca, int userId, TipoVocabulario? tipo, DateTime de, DateTime ate)
+        public ICollection<Vocabulario> ObterPesquisa(string busca, int userId, TipoVocabulario? tipo, DateTime de, DateTime ate, int limite = 5000, bool praticando = false)
         {
 
             var query = _context.Vocabularios
                 .AsNoTracking()
                 .OrderByDescending(x => x.CreatedAt)
-                .Where(v => (v.EmIngles.StartsWith(busca ?? "")
-                    || v.Traducao.Contains(busca ?? ""))
+                .Where(v => (v.EmIngles.StartsWith(busca ?? "") || v.Traducao.Contains(busca ?? ""))
                     && v.UserId == userId && !v.Inativo
-                    && v.CreatedAt >= de && v.CreatedAt <= ate
-                );
+                    && v.CreatedAt >= de && v.CreatedAt <= ate);
 
             if (tipo > 0)
             {
                 query = query.Where(v => v.TipoVocabulario == tipo);
             }
 
+            if (praticando)
+            {
+                query = query
+                    .OrderBy(x => Guid.NewGuid());
+            }
+
             return query
-                .Take(500)
+                .Take(limite)
                 .ToList();
         }
     }

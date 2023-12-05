@@ -19,6 +19,8 @@ namespace InglesApp.API.Controllers
             _praticaService = praticaService;
         }
 
+
+        //validar no post se é prática de tradução para validar a resposta correta
         [HttpPost]
         public IActionResult Post(PraticaDto pratica)
         {

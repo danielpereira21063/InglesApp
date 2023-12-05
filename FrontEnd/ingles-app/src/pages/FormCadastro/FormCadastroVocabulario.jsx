@@ -83,12 +83,12 @@ function FormCadastroVocabulario() {
                     window.location.href = "/";
                 }, 1000);
             }
-
-            setTipoSelecionado("Palavra");
         } catch (error) {
             toast.error(error?.response?.data ?? "Erro");
         } finally {
-            setIsSubmitting(false);
+            setTimeout(() => {
+                setIsSubmitting(false);
+            }, 1000);
         }
     };
 

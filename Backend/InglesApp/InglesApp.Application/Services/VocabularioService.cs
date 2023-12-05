@@ -30,9 +30,15 @@ namespace InglesApp.Application.Services
             };
         }
 
-        public ICollection<VocabularioDto> ObterPesquisa(string pesquisa, int userId, TipoVocabulario? tipo, DateTime de, DateTime ate)
+        public ICollection<VocabularioDto> ObterPesquisa(string pesquisa,
+                                                         int userId,
+                                                         TipoVocabulario? tipo,
+                                                         DateTime de,
+                                                         DateTime ate,
+                                                         bool praticando = false,
+                                                         int limite = 1000)
         {
-            return _vocabularioRepository.ObterPesquisa(pesquisa, userId, tipo, de, ate)
+            return _vocabularioRepository.ObterPesquisa(pesquisa, userId, tipo, de, ate, praticando: praticando, limite: limite)
                 .Select(voc => new VocabularioDto()
                 {
                     Id = voc.Id,
