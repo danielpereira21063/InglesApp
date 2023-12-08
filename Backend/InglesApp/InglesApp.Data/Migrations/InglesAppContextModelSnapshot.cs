@@ -31,6 +31,9 @@ namespace InglesApp.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<bool>("PraticaDeTraducao")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("Resposta")
                         .IsRequired()
                         .HasColumnType("longtext");

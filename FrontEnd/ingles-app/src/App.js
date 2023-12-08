@@ -51,9 +51,9 @@ function InnerApp() {
 
       {/* Botões fixos na parte inferior */}
       <div className='fixed-buttons'>
-        {!isHome && 
+        {/* {!isHome && 
           <Button variant='light' onClick={() => window.history.back()} className='btn-lg rounded-circle me-1'><i className="fa-solid fa-arrow-left"></i></Button>
-        }
+        } */}
         <Button onClick={() => window.location.href = "/vocabulario/novo"} className='btn-lg ml-2 rounded-circle'><i className="fa-solid fa-plus"></i></Button>
       </div>
 

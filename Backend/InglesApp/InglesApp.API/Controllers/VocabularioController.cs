@@ -101,6 +101,8 @@ namespace InglesApp.API.Controllers
                 Random random = new Random();
                 if (praticando)
                 {
+                    vocs = vocs.OrderBy(v => Guid.NewGuid()).ToList();
+
                     var retorno = new List<PraticaModel>();
                     foreach (var vocabulario in vocs)
                     {

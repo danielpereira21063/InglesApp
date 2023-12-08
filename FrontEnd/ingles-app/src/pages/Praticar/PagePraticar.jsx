@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Spinner } from 'react-bootstrap';
+import { Button, Card, Form, Spinner } from 'react-bootstrap';
 import api from '../../api/api';
 import { toast } from 'react-toastify';
 
 const PagePraticar = () => {
   const [praticarPalavras, setPraticarPalavras] = useState(true);
   const [praticarFrases, setPraticarFrases] = useState(true);
-  const [limite, setLimite] = useState(10);
-  const [periodo, setPeriodo] = useState(1);
+  const [limite, setLimite] = useState(5);
+  const [periodo, setPeriodo] = useState(5);
   const [praticando, setPraticando] = useState(false);
   const [questoes, setQuestoes] = useState([]);
   const [idxQuestaoAtual, setIdxQuestaoAtual] = useState(-1);
@@ -16,6 +16,8 @@ const PagePraticar = () => {
   const [verificado, setVerificado] = useState(false);
   const [acertou, setAcertou] = useState(null);
   const [mensagem, setMensagem] = useState(null);
+  const [numErros, setNumErros] = useState(0);
+  const [numAcertos, setNumAcertos] = useState(0);
 
   const fetchQuestoes = async () => {
     setLoading(true);
@@ -49,6 +51,7 @@ const PagePraticar = () => {
       id: 0,
       vocabularioId: questaoAtual.vocabularioId,
       userId: 0,
+      praticaDeTraducao: questaoAtual.praticaDeTraducao,
       resposta: respostaSelecionada,
       similaridadeDeAcerto: 0.00,
       acertou: false,
@@ -60,18 +63,16 @@ const PagePraticar = () => {
         const { data } = response;
 
         console.log(data);
-  
-        const praticaUsuario = data;
 
-
-  
-        setAcertou(praticaUsuario.acertou);
-        console.log(acertou);
-        if (acertou) {
+        if (data.acertou) {
+          setAcertou(true);
+          setNumAcertos(numAcertos+1);
           setMensagem(`Parabéns, você acertou ${data.similaridadeDeAcerto}% :)`);
         } else {
-          setMensagem(`Que pena, você errou! A resposta correta era "${data.resposta}"`)
-        }
+          setAcertou(false);
+          setNumErros(numErros+1);
+          setMensagem(`Que pena, você errou! A resposta correta era "${questaoAtual.respostaCorreta}"`)
+        };
       });
     } catch (error) {
       toast.error(error?.response?.data ?? "Erro ao carregar dados");
@@ -122,7 +123,10 @@ const PagePraticar = () => {
   };
 
   const verificarResposta = async () => {
-    if (respostaSelecionada == null) return;
+    if (respostaSelecionada == null) {
+      toast.warning("Preencha a resposta :)")
+      return;
+    }
     await postRespostaUsuario();
   }
 
@@ -182,33 +186,51 @@ const PagePraticar = () => {
         }
 
         {praticando && idxQuestaoAtual != -1 && (
-          <div>
-            <h5 className='mb-3'>{questoes[idxQuestaoAtual]?.questao}</h5>
+          <>
+            <Card className='p-2 px-4'>
+              <h5 className='text-center'>{idxQuestaoAtual + 1}/{questoes.length} questões</h5>
+              <div className='d-flex justify-content-between'>
+                <div>
+                  <div className='d-flex flex-column'><span><i className="fa-solid fa-check text-success"></i> Acertos</span>
+                    <span className='text-center'>{numAcertos}</span>
+                  </div>
+                </div>
+                <div>
+                  <div className='d-flex flex-column'><span><i className="fa-solid fa-ban text-danger"></i> Erros</span>
+                    <span className='text-center'>{numErros}</span>
+                  </div>
+                </div>
+              </div>
+            </Card>
+            <div>
+              <h5 className='my-3'>{questoes[idxQuestaoAtual]?.questao}</h5>
 
-            {questoes[idxQuestaoAtual]?.opcoes &&
-              questoes[idxQuestaoAtual].opcoes?.map((op, idx) => (
-                <label className={`d-flex p-2 mb-2 w-100 bg-dark border rounded-3 ${respostaSelecionada == op && verificado && (acertou ? 'border-success' : 'border-danger')}`} htmlFor={idx + 1} key={idx}>
-                  <Form.Check className='ms-2'
-                    disabled={verificado && acertou !== null}
-                    type="radio"
-                    id={idx + 1}
-                    name="resposta"
-                    label={op}
-                    onChange={() => setRespostaSelecionada(op)}
-                  />
-                </label>
-              ))
-            }
+              {questoes[idxQuestaoAtual]?.opcoes &&
+                questoes[idxQuestaoAtual].opcoes?.map((op, idx) => (
+                  <label className={`d-flex p-2 mb-2 w-100 bg-dark border rounded-3 ${respostaSelecionada == op && verificado && (acertou ? 'border-success' : 'border-danger')}`} htmlFor={idx + 1} key={idx}>
+                    <Form.Check className='ms-2'
+                      disabled={verificado && acertou !== null}
+                      type="radio"
+                      id={idx + 1}
+                      name="resposta"
+                      checked={respostaSelecionada == op}
+                      label={op}
+                      onChange={() => setRespostaSelecionada(op)}
+                    />
+                  </label>
+                ))
+              }
 
-            {(questoes[idxQuestaoAtual]?.opcoes?.length ?? 0) == 0 &&
-              <>
-                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                  <Form.Label>Sua resposta</Form.Label>
-                  <Form.Control placeholder='Digite sua resposta aqui...' readOnly={verificado && acertou !== null} className={`${verificado && (acertou ? 'border-success' : 'border-danger')}`} as="textarea" rows={2} onChange={(e) => setRespostaSelecionada(e.target.value)} />
-                </Form.Group>
-              </>
-            }
-          </div>
+              {(questoes[idxQuestaoAtual]?.opcoes?.length ?? 0) == 0 &&
+                <>
+                  <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                    <Form.Label>Sua resposta</Form.Label>
+                    <Form.Control value={respostaSelecionada ?? ""} placeholder='Digite sua resposta aqui...' readOnly={verificado && acertou !== null} className={`${verificado && (acertou ? 'border-success' : 'border-danger')}`} as="textarea" rows={2} onChange={(e) => setRespostaSelecionada(e.target.value)} />
+                  </Form.Group>
+                </>
+              }
+            </div>
+          </>
         )}
 
         {(verificado && acertou !== null) &&

@@ -5,6 +5,7 @@
         public int Id { get; set; }
         public int VocabularioId { get; set; }
         public int UserId { get; set; }
+        public bool PraticaDeTraducao { get; set; }
         public string Resposta { get; set; }
         public bool Acertou { get; set; }
 

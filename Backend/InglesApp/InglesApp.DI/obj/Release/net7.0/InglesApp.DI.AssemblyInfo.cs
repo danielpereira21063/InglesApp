@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("InglesApp.DI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+99d0abef697267cacef78543c4dd45ef5dbcdcb9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+70c0c25a2586cc511d162921f4f59de195a90ba9")]
 [assembly: System.Reflection.AssemblyProductAttribute("InglesApp.DI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("InglesApp.DI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

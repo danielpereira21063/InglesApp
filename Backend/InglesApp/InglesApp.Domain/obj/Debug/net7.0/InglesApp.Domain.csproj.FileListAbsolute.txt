@@ -1,0 +1,13 @@
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Domain\bin\Debug\net7.0\InglesApp.Domain.deps.json
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Domain\bin\Debug\net7.0\InglesApp.Domain.dll
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Domain\bin\Debug\net7.0\InglesApp.Domain.pdb
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Domain\obj\Debug\net7.0\InglesApp.Domain.csproj.AssemblyReference.cache
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Domain\obj\Debug\net7.0\InglesApp.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Domain\obj\Debug\net7.0\InglesApp.Domain.AssemblyInfoInputs.cache
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Domain\obj\Debug\net7.0\InglesApp.Domain.AssemblyInfo.cs
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Domain\obj\Debug\net7.0\InglesApp.Domain.csproj.CoreCompileInputs.cache
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Domain\obj\Debug\net7.0\InglesApp.Domain.sourcelink.json
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Domain\obj\Debug\net7.0\InglesApp.Domain.dll
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Domain\obj\Debug\net7.0\refint\InglesApp.Domain.dll
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Domain\obj\Debug\net7.0\InglesApp.Domain.pdb
+D:\Projetos\ProjetosPessoais\InglesApp\Backend\InglesApp\InglesApp.Domain\obj\Debug\net7.0\ref\InglesApp.Domain.dll

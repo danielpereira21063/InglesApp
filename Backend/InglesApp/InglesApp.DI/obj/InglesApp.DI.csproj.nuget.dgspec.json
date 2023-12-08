@@ -83,6 +83,11 @@
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
+      },
+      "runtimes": {
+        "linux-arm64": {
+          "#import": []
+        }
       }
     },
     "D:\\Projetos\\ProjetosPessoais\\InglesApp\\Backend\\InglesApp\\InglesApp.Data\\InglesApp.Data.csproj": {
@@ -164,6 +169,11 @@
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
+      },
+      "runtimes": {
+        "linux-arm64": {
+          "#import": []
+        }
       }
     },
     "D:\\Projetos\\ProjetosPessoais\\InglesApp\\Backend\\InglesApp\\InglesApp.DI\\InglesApp.DI.csproj": {
@@ -239,6 +249,11 @@
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
+      },
+      "runtimes": {
+        "linux-arm64": {
+          "#import": []
+        }
       }
     },
     "D:\\Projetos\\ProjetosPessoais\\InglesApp\\Backend\\InglesApp\\InglesApp.Domain\\InglesApp.Domain.csproj": {
@@ -299,6 +314,11 @@
             }
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "linux-arm64": {
+          "#import": []
         }
       }
     }

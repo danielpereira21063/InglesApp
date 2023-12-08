@@ -3,6 +3,8 @@ using InglesApp.Application.Services.Interfaces;
 using InglesApp.Domain.Entities;
 using InglesApp.Domain.Enums;
 using InglesApp.Domain.Interfaces;
+using System.Globalization;
+using System.Text;
 
 namespace InglesApp.Application.Services
 {
@@ -23,9 +25,10 @@ namespace InglesApp.Application.Services
             var similiaridade = VerificarSimilaridade(pratica);
 
             //se acertou 95% da palavra/frase significa que acertou
-            var acertou = similiaridade > 95.0;
+            var acertou = similiaridade > 90.0;
 
-            var novaPratica = new Pratica(pratica.VocabularioId, pratica.UserId, pratica.Resposta, acertou);
+            var novaPratica = new Pratica(pratica.VocabularioId, pratica.UserId, pratica.Resposta, acertou, pratica.PraticaDeTraducao);
+
 
             _praticaRepository.Adicionar(novaPratica);
 
@@ -35,6 +38,7 @@ namespace InglesApp.Application.Services
                 VocabularioId = novaPratica.VocabularioId,
                 UserId = novaPratica.UserId,
                 Acertou = novaPratica.Acertou,
+                PraticaDeTraducao = novaPratica.PraticaDeTraducao,
                 SimilaridadeDeAcerto = similiaridade,
                 Resposta = novaPratica.Resposta,
                 CreatedAt = novaPratica.CreatedAt
@@ -51,6 +55,7 @@ namespace InglesApp.Application.Services
                     VocabularioId = p.VocabularioId,
                     UserId = p.UserId,
                     Acertou = p.Acertou,
+                    PraticaDeTraducao = p.PraticaDeTraducao,
                     Resposta = p.Resposta,
                     CreatedAt = p.CreatedAt
                 }).ToList();
@@ -60,13 +65,18 @@ namespace InglesApp.Application.Services
         {
             var vocabulario = _vocabularioRepository.Obter(pratica.VocabularioId);
 
-            var resposta = vocabulario.EmIngles;
-            var respostaUsuario = pratica.Resposta;
+            var resposta = RemoverAcentosEEspacos(vocabulario.EmIngles).ToLower();
+            var respostaUsuario = RemoverAcentosEEspacos(pratica.Resposta).ToLower();
+
+            if (pratica.PraticaDeTraducao)
+            {
+                resposta = RemoverAcentosEEspacos(vocabulario.Traducao).ToLower();
+            }
 
             // Calcula a distância de Levenshtein
             int distancia = CalcularDistanciaLevenshtein(resposta, respostaUsuario);
 
-            // Calcula a porcentagem de similaridade
+            // Calcula a porcentagem de similaridade normalizando pela maior string
             double similaridade = 100.0 - ((double)distancia / Math.Max(resposta.Length, respostaUsuario.Length)) * 100.0;
 
             // Retorna verdadeiro se a similaridade for pelo menos 95%
@@ -99,6 +109,23 @@ namespace InglesApp.Application.Services
             }
 
             return matriz[len1, len2];
+        }
+
+        private string RemoverAcentosEEspacos(string input)
+        {
+            string normalized = input.Normalize(NormalizationForm.FormD);
+            StringBuilder sb = new StringBuilder();
+
+            foreach (char c in normalized)
+            {
+                UnicodeCategory category = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (category != UnicodeCategory.NonSpacingMark && !char.IsWhiteSpace(c))
+                {
+                    sb.Append(c);
+                }
+            }
+
+            return sb.ToString();
         }
     }
 }

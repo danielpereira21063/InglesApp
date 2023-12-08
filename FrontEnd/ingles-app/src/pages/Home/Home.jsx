@@ -9,7 +9,7 @@ import { VozUtil } from '../../util/VozUtil';
 function Home() {
     const [vocabularies, setVocabularies] = useState([]);
     const [tipoSelecionado, setTipoSelecionado] = useState(0);
-    const [periodo, setPeriodo] = useState(1);
+    const [periodo, setPeriodo] = useState(5);
     const [loading, setLoading] = useState(true);
     const [periodoFormatado, setPeriodoFormatado] = useState("");
     const [pesquisa, setPesquisa] = useState("");
